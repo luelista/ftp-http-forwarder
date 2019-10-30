@@ -1,0 +1,13 @@
+gitea.com/goftp/file-driver v0.0.0-20190712091345-f79c2ed973f8/go.mod h1:ghdogu0Da3rwYCSJ20JPgTiMcDpzeRbzvuFIOOW3G7w=
+gitea.com/goftp/file-driver v0.0.0-20190812052443-efcdcba68b34/go.mod h1:6+f1gclV97PmaVmE4YJbH3KIKnl+r3/HWR0zD/z1CG4=
+github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/goftp/file-driver v0.0.0-20180502053751-5d604a0fc0c9/go.mod h1:GpOj6zuVBG3Inr9qjEnuVTgBlk2lZ1S9DcoFiXWyKss=
+github.com/goftp/server v0.0.0-20190304020633-eabccc535b5a/go.mod h1:k/SS6VWkxY7dHPhoMQ8IdRu8L4lQtmGbhyXGg+vCnXE=
+github.com/jlaffaye/ftp v0.0.0-20190624084859-c1312a7102bf/go.mod h1:lli8NYPQOFy3O++YmYbqVgOcQ1JPCwdOy+5zSjKJ9qY=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+goftp.io/server v0.0.0-20190712054601-1149070ae46b/go.mod h1:xreggPYu7ZuNe9PfbxiQca7bYGwU44IvlCCg3KzWJtQ=
+goftp.io/server v0.0.0-20190812034929-9b3874d17690/go.mod h1:99FISrRpwKfaL4Ey/dX8N48WToveng/s2OXR5sJ3cnc=
+goftp.io/server v0.0.0-20190812052725-72a57b186803 h1:I2IgXYRuOZ6LceE7VY6aSnYuUy6Wot3WFhqI5WsAHXQ=
+goftp.io/server v0.0.0-20190812052725-72a57b186803/go.mod h1:eDjthxa5tFTS2JVry2jHt1g9y3J0Vgu2Nd+lmNWev7Y=
