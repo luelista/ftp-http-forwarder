@@ -9,6 +9,7 @@ import (
     "net/http"
     "flag"
     "log"
+    "fmt"
 	"goftp.io/server"
 )
 
@@ -78,7 +79,12 @@ func (driver *ForwarderDriver) PutFile(destPath string, data io.Reader, appendDa
     client := &http.Client{}
     req, err := http.NewRequest("PUT", driver.TargetURL + url.QueryEscape(destPath), data)
     resp, err := client.Do(req)
-	return resp.Request.ContentLength, err
+
+    log.Printf("Status: %v, Transferred bytes: %v, errmes: %v", resp.Status, resp.Request.ContentLength, err)
+    if resp.StatusCode >= 300 {
+	return 0, fmt.Errorf("server returned error status %s", resp.Status)
+    }
+    return resp.Request.ContentLength, err
 }
 
 type ForwarderDriverFactory struct {
