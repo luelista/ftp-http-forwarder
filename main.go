@@ -137,6 +137,7 @@ func main() {
 		pass = flag.String("pass", "123456", "Password for login")
 		port = flag.Int("port", 2121, "Port")
 		host = flag.String("host", "localhost", "Host")
+		passiveports = flag.String("passiveports", "2130-2134", "Passive ports")
 	)
 	flag.Parse()
 	if *target == "" {
@@ -149,6 +150,7 @@ func main() {
 		Port:     *port,
 		Hostname: *host,
 		Auth:     &server.SimpleAuth{Name: *user, Password: *pass},
+		PassivePorts: *passiveports,
 	}
 
 	log.Printf("Starting ftp server on %v:%v", opts.Hostname, opts.Port)
