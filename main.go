@@ -4,12 +4,15 @@ import (
 	"errors"
 	"io"
 	"os"
+	"time"
 	//"strings"
     "net/url"
     "net/http"
     "flag"
     "log"
     "fmt"
+	"path/filepath"
+	"strings"
 	"goftp.io/server"
 )
 
@@ -18,24 +21,42 @@ type ForwarderDriver struct {
 	server.Perm
 }
 
-type FileInfo struct {
-	os.FileInfo
-
+type myFileInfo struct {
 	mode  os.FileMode
 	owner string
 	group string
 }
 
-func (f *FileInfo) Mode() os.FileMode {
+func (f *myFileInfo) Mode() os.FileMode {
+	return os.ModeDir
+}
+
+func (f *myFileInfo) Owner() string {
+	return ""
+}
+
+func (f *myFileInfo) Group() string {
+	return ""
+}
+
+func (f *myFileInfo) Name() string {
+	return ""
+}
+
+func (f *myFileInfo) Size() int64 {
 	return 0
 }
 
-func (f *FileInfo) Owner() string {
-	return ""
+func (f *myFileInfo) Sys() any {
+	return 0
 }
 
-func (f *FileInfo) Group() string {
-	return ""
+func (f *myFileInfo) ModTime() time.Time {
+	return time.Now()
+}
+
+func (f *myFileInfo) IsDir() bool {
+	return true
 }
 
 func (driver *ForwarderDriver) Init(conn *server.Conn) {
@@ -43,11 +64,17 @@ func (driver *ForwarderDriver) Init(conn *server.Conn) {
 }
 
 func (driver *ForwarderDriver) ChangeDir(path string) error {
+	log.Printf("ChangeDir: %v", path)
 	return nil
 }
 
 func (driver *ForwarderDriver) Stat(path string) (server.FileInfo, error) {
-	return nil, errors.New("Not Implemented")
+	log.Printf("Stat: %v", path)
+	if (path == "/") {
+		return &myFileInfo{}, nil
+	} else {
+		return nil, errors.New("Not Implemented")
+	}
 }
 
 func (driver *ForwarderDriver) ListDir(path string, callback func(server.FileInfo) error) error {
@@ -75,9 +102,14 @@ func (driver *ForwarderDriver) GetFile(path string, offset int64) (int64, io.Rea
 }
 
 func (driver *ForwarderDriver) PutFile(destPath string, data io.Reader, appendData bool) (int64, error) {
-	log.Printf("Forwarding %v", destPath)
+	log.Printf("Forwarding %v (%v)", destPath, filepath.Base(destPath))
+	destUrl := strings.Replace(strings.Replace(
+		driver.TargetURL, 
+		"{escaped_path}", url.QueryEscape(destPath), -1),
+		"{escaped_name}", url.QueryEscape(filepath.Base(destPath)), -1)
+	log.Printf("Dest URL %v", destUrl)
     client := &http.Client{}
-    req, err := http.NewRequest("PUT", driver.TargetURL + url.QueryEscape(destPath), data)
+    req, err := http.NewRequest("PUT", destUrl, data)
     resp, err := client.Do(req)
 
     log.Printf("Status: %v, Transferred bytes: %v, errmes: %v", resp.Status, resp.Request.ContentLength, err)
